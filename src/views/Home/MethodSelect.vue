@@ -17,34 +17,34 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { ElSelect } from 'element-plus';
+import { computed } from 'vue'
+import { ElSelect } from 'element-plus'
 
 const props = defineProps({
   modelValue: {
     type: String,
-    default: 'ALL',
+    default: 'ALL'
   },
   placeholder: {
     type: String,
-    default: '请选择请求方法',
-  },
-});
+    default: '请选择请求方法'
+  }
+})
 
-const emit = defineEmits(['update:modelValue', 'change']);
+const emit = defineEmits(['update:modelValue', 'change'])
 
 const options = [
   { value: 'ALL', label: 'ALL' },
   { value: 'GET', label: 'GET' },
   { value: 'POST', label: 'POST' },
   { value: 'PUT', label: 'PUT' },
-  { value: 'DELETE', label: 'DELETE' },
-];
+  { value: 'DELETE', label: 'DELETE' }
+]
 
 const selectedValue = computed({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
-});
+  set: (value) => emit('update:modelValue', value)
+})
 </script>
 
 <style scoped>

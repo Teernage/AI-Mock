@@ -5,7 +5,10 @@
         <h1>API Mock</h1>
         <p>轻量级接口模拟工具</p>
       </div>
-      <button class="btn-open-tab" @click="openInNewTab">
+      <button
+        class="btn-open-tab"
+        @click="openInNewTab"
+      >
         在新标签页中打开
       </button>
     </div>
@@ -28,7 +31,10 @@
 
         <div class="input-group">
           <label>请求方法</label>
-          <MethodSelect v-model="method" @change="saveDraft" />
+          <MethodSelect
+            v-model="method"
+            @change="saveDraft"
+          />
         </div>
 
         <div class="input-group">
@@ -41,8 +47,18 @@
         </div>
 
         <div class="btn-group">
-          <button class="btn-primary" @click="addRule">添加规则</button>
-          <button class="btn-secondary" @click="clearAllRules">清空全部</button>
+          <button
+            class="btn-primary"
+            @click="addRule"
+          >
+            添加规则
+          </button>
+          <button
+            class="btn-secondary"
+            @click="clearAllRules"
+          >
+            清空全部
+          </button>
         </div>
       </div>
 
@@ -52,14 +68,23 @@
       </div>
 
       <div id="rules">
-        <div v-if="rules.length === 0" class="empty-state">
+        <div
+          v-if="rules.length === 0"
+          class="empty-state"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
           >
-            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="2"
+            />
             <path d="M9 9h6M9 15h6" />
           </svg>
           <p>暂无 Mock 规则</p>
@@ -72,20 +97,10 @@
         >
           <div class="rule-header">
             <div class="rule-url">
-              <span
-                :class="[
-                  'method-badge',
-                  `method-${(rule.method || 'ALL').toLowerCase()}`,
-                ]"
-              >
+              <span :class="['method-badge', `method-${(rule.method || 'ALL').toLowerCase()}`]">
                 {{ rule.method || 'ALL' }}
               </span>
-              <span
-                :class="[
-                  'match-mode-badge',
-                  `match-mode-${rule.matchMode || 'contains'}`,
-                ]"
-              >
+              <span :class="['match-mode-badge', `match-mode-${rule.matchMode || 'contains'}`]">
                 {{ matchModeText[rule.matchMode] || '包含' }}
               </span>
               <span>{{ rule.url }}</span>
@@ -96,7 +111,10 @@
                 size="small"
                 @change="toggleRule(index)"
               ></el-switch>
-              <button class="btn-delete" @click="deleteRule(index)">
+              <button
+                class="btn-delete"
+                @click="deleteRule(index)"
+              >
                 删除
               </button>
             </div>
@@ -110,15 +128,10 @@
             </div>
             <button
               v-if="rule.data.length > 100"
-              :class="[
-                'btn-toggle-data',
-                { expanded: expandedRules.has(index) },
-              ]"
+              :class="['btn-toggle-data', { expanded: expandedRules.has(index) }]"
               @click="toggleDataExpand(index)"
             >
-              <span class="toggle-text">{{
-                expandedRules.has(index) ? '收起' : '展开'
-              }}</span>
+              <span class="toggle-text">{{ expandedRules.has(index) ? '收起' : '展开' }}</span>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -135,7 +148,10 @@
 
     <!-- Toast 提示 -->
     <Transition name="fade">
-      <div v-if="toastMessage" class="toast">
+      <div
+        v-if="toastMessage"
+        class="toast"
+      >
         {{ toastMessage }}
       </div>
     </Transition>
@@ -143,39 +159,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue';
-import MatchModeSelect from './MatchModeSelect.vue';
-import MethodSelect from './MethodSelect.vue';
+import { ref, reactive, onMounted } from 'vue'
+import MatchModeSelect from './MatchModeSelect.vue'
+import MethodSelect from './MethodSelect.vue'
 
 // 响应式数据
 const rules = ref<
   Array<{
-    url: string;
-    method: string;
-    matchMode: string;
-    data: string;
-    enabled: boolean;
+    url: string
+    method: string
+    matchMode: string
+    data: string
+    enabled: boolean
   }>
->([]);
+>([])
 
-const url = ref('');
-const method = ref('ALL');
-const matchMode = ref('contains');
-const data = ref('');
-const toastMessage = ref('');
-const expandedRules = reactive(new Set<number>());
+const url = ref('')
+const method = ref('ALL')
+const matchMode = ref('contains')
+const data = ref('')
+const toastMessage = ref('')
+const expandedRules = reactive(new Set<number>())
 
 const matchModeText = {
   contains: '包含',
-  exact: '完整',
-};
+  exact: '完整'
+}
 
 // 在新标签页中打开
 const openInNewTab = () => {
   if (typeof chrome !== 'undefined' && chrome.tabs) {
-    chrome.tabs.create({ url: window.location.href });
+    chrome.tabs.create({ url: window.location.href })
   }
-};
+}
 
 // 保存草稿
 const saveDraft = () => {
@@ -183,121 +199,131 @@ const saveDraft = () => {
     url: url.value.trim(),
     method: method.value,
     matchMode: matchMode.value,
-    data: data.value.trim(),
-  };
-  if (typeof chrome !== 'undefined' && chrome.storage) {
-    chrome.storage.local.set({ draftInput: draft });
+    data: data.value.trim()
   }
-};
+  if (typeof chrome !== 'undefined' && chrome.storage) {
+    chrome.storage.local.set({ draftInput: draft })
+  }
+}
 
 // 添加规则
 const addRule = () => {
-  const urlValue = url.value.trim();
-  const dataValue = data.value.trim();
+  const urlValue = url.value.trim()
+  const dataValue = data.value.trim()
 
   if (!urlValue || !dataValue) {
-    showToast('请填写完整信息');
-    return;
+    showToast('请填写完整信息')
+    return
   }
 
   try {
-    JSON.parse(dataValue);
+    JSON.parse(dataValue)
     rules.value.push({
       url: urlValue,
       method: method.value,
       matchMode: matchMode.value,
       data: dataValue,
-      enabled: true,
-    });
+      enabled: true
+    })
 
     if (typeof chrome !== 'undefined' && chrome.storage) {
-      chrome.storage.local.set({ mockRules: rules.value });
+      chrome.storage.local.set({ mockRules: rules.value })
     }
 
     // 清空输入框
-    url.value = '';
-    data.value = '';
-    method.value = 'ALL';
-    matchMode.value = 'contains';
+    url.value = ''
+    data.value = ''
+    method.value = 'ALL'
+    matchMode.value = 'contains'
 
     if (typeof chrome !== 'undefined' && chrome.storage) {
-      chrome.storage.local.remove('draftInput');
+      chrome.storage.local.remove('draftInput')
     }
 
-    showToast('✓ 添加成功');
+    showToast('✓ 添加成功')
   } catch (e) {
-    showToast('JSON 格式错误');
+    showToast('JSON 格式错误')
   }
-};
+}
 
 // 清空全部规则
 const clearAllRules = () => {
-  if (rules.value.length === 0) return;
+  if (rules.value.length === 0) return
   if (confirm('确定清空所有规则？')) {
-    rules.value = [];
+    rules.value = []
     if (typeof chrome !== 'undefined' && chrome.storage) {
-      chrome.storage.local.set({ mockRules: [] });
+      chrome.storage.local.set({ mockRules: [] })
     }
-    showToast('✓ 已清空');
+    showToast('✓ 已清空')
   }
-};
+}
+
+console.log('EREWRTWERWERWE')
 
 // 切换规则启用状态
 const toggleRule = (index: number) => {
   if (typeof chrome !== 'undefined' && chrome.storage) {
-    chrome.storage.local.set({ mockRules: rules.value });
+    chrome.storage.local.set({ mockRules: rules.value })
   }
-  const status = rules.value[index].enabled ? '已启用' : '已禁用';
-  showToast(`✓ ${status}`);
-};
+  const status = rules.value[index].enabled ? '已启用' : '已禁用'
+  showToast(`✓ ${status}`)
+}
 
 // 删除规则
 const deleteRule = (index: number) => {
-  rules.value.splice(index, 1);
+  rules.value.splice(index, 1)
   if (typeof chrome !== 'undefined' && chrome.storage) {
-    chrome.storage.local.set({ mockRules: rules.value });
+    chrome.storage.local.set({ mockRules: rules.value })
   }
-  expandedRules.delete(index);
-  showToast('✓ 已删除');
-};
+  expandedRules.delete(index)
+  showToast('✓ 已删除')
+}
 
 // 切换数据展开/收起
 const toggleDataExpand = (index: number) => {
   if (expandedRules.has(index)) {
-    expandedRules.delete(index);
+    expandedRules.delete(index)
   } else {
-    expandedRules.add(index);
+    expandedRules.add(index)
   }
-};
+}
 
 // 显示提示信息
 const showToast = (message: string) => {
-  toastMessage.value = message;
+  toastMessage.value = message
   setTimeout(() => {
-    toastMessage.value = '';
-  }, 1500);
-};
+    toastMessage.value = ''
+  }, 1500)
+}
 
+// 页面加载时恢复数据
 // 页面加载时恢复数据
 onMounted(() => {
   if (typeof chrome !== 'undefined' && chrome.storage) {
     chrome.storage.local.get(['mockRules', 'draftInput'], (result) => {
-      const mockRules = result.mockRules || [];
-      rules.value = mockRules.map((rule: any) => ({
+      const raw = result.mockRules
+      const mockRulesArray = Array.isArray(raw)
+        ? raw
+        : raw && typeof raw === 'object'
+          ? Object.values(raw)
+          : []
+
+      // 映射规则并设置默认值
+      rules.value = mockRulesArray.map((rule: any) => ({
         ...rule,
         matchMode: rule.matchMode || 'contains',
-        enabled: rule.enabled !== false,
-      }));
+        enabled: rule.enabled !== false
+      }))
 
       // 恢复草稿
-      const draft = result.draftInput || {};
-      if (draft.url) url.value = draft.url;
-      if (draft.method) method.value = draft.method;
-      if (draft.matchMode) matchMode.value = draft.matchMode;
-      if (draft.data) data.value = draft.data;
-    });
+      const draft = result.draftInput || {}
+      if (draft.url) url.value = draft.url
+      if (draft.method) method.value = draft.method
+      if (draft.matchMode) matchMode.value = draft.matchMode
+      if (draft.data) data.value = draft.data
+    })
   }
-});
+})
 </script>
 
 <style scoped>

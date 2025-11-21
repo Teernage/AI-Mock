@@ -34,7 +34,8 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'vue/attribute-hyphenation': ['error', 'always'], // 强制使用 kebab-case
     '@typescript-eslint/no-namespace': 'off',
-    camelcase: 'off' // 允许使用使用带有大写字母的命名
+    camelcase: 'off', // 允许使用使用带有大写字母的命名
+    'prettier/prettier': ['error', { endOfLine: 'auto', singleAttributePerLine: true }]
     // '@typescript-eslint/naming-convention': [
     //   'off' // 关闭命名约定检查
     // ]
