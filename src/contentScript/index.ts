@@ -3,19 +3,12 @@
  * 使用 chrome.runtime.getURL 获取扩展内资源的绝对 URL。
  */
 function init() {
-  console.log('我来了')
-  // if (document.documentElement.hasAttribute('data-mock-extension-injected')) {
-  //   console.log('[Mock] 脚本已注入，跳过')
-  //   return
-  // }
-  // document.documentElement.setAttribute('data-mock-extension-injected', 'true')
-
   const script = document.createElement('script')
   script.src = chrome.runtime.getURL('src/injected/index.js')
   script.onload = function () {
     console.log('注入脚本已成功加载')
   }
-  ;(document.head || document.documentElement).appendChild(script)
+    ; (document.head || document.documentElement).appendChild(script)
 }
 
 init()

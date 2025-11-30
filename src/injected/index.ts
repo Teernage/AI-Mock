@@ -1,5 +1,4 @@
-;(function () {
-  console.log('我是injected')
+; (function () {
 
   //  保存原始方法
   const originalFetch = window.fetch
@@ -37,7 +36,7 @@
       if (input && typeof input === 'object' && 'url' in input) {
         return input.url
       }
-    } catch (_) {}
+    } catch (_) { }
     return String(input)
   }
 
@@ -97,7 +96,7 @@
   // ========== Fetch 拦截 ==========
   window.fetch = async function (url, options = {}) {
     const method = getMethod(url, options)
-    const response = await sendMockRequest(url, method)
+    const response: any = await sendMockRequest(url, method)
 
     if (response.shouldMock) {
       return new Response(JSON.stringify(response.mockData), {
@@ -124,7 +123,7 @@
       return originalXHRSend.apply(this, arguments)
     }
 
-    const response = await sendMockRequest(url, method)
+    const response: any = await sendMockRequest(url, method)
 
     if (response.shouldMock) {
       Object.defineProperty(this, 'readyState', { writable: true, value: 4 })

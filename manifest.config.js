@@ -2,9 +2,9 @@ import { defineManifest } from '@crxjs/vite-plugin'
 
 export default defineManifest({
   manifest_version: 3,
-  name: 'onion-sidebar',
+  name: 'quick-mock-ai',
   version: '0.0.0',
-  description: '欢迎使用 onion-sidebar 插件',
+  description: '欢迎使用 quick-mock-ai插件',
   host_permissions: ['<all_urls>'],
   icons: {
     16: 'img/favicon_16.png',
@@ -15,7 +15,13 @@ export default defineManifest({
   background: {
     service_worker: 'src/BackgroundScript/background.ts'
   },
-  permissions: ['sidePanel', 'scripting', 'storage'],
+  permissions: [
+    'sidePanel',
+    'scripting',
+    'storage',
+    'declarativeNetRequest',
+    'declarativeNetRequestWithHostAccess'
+  ],
   action: {},
   side_panel: {
     default_path: 'index.html'
@@ -23,13 +29,13 @@ export default defineManifest({
   content_scripts: [
     {
       matches: ['<all_urls>'],
-      js: ['src/contentScript/index.js'],
+      js: ['src/contentScript/index.ts'],
       run_at: 'document_idle'
     }
   ],
   web_accessible_resources: [
     {
-      resources: ['src/injected/index.js'],
+      resources: ['src/injected/index.ts'],
       matches: ['<all_urls>']
     }
   ]

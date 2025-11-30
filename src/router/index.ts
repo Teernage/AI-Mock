@@ -1,11 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeCom from '@/views/Home/HomeCom.vue'
+import AiMock from '@/views/AiMock/AiMock.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: HomeCom
+    name: 'AiMock',
+    component: AiMock
   }
 ]
 
