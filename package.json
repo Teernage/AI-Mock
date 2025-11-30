@@ -46,7 +46,6 @@
     "@vue/eslint-config-standard": "^8.0.1",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/test-utils": "^2.4.6",
-    "axios-mock-adapter": "^2.0.0",
     "chalk": "4",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
