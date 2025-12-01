@@ -30,5 +30,5 @@
     "src/**/*.vue",
     "auto-imports.d.ts",
     "global.d.ts"
-  ]
+, "src/injected/index.js", "src/contentScript/index.js"  ]
 }

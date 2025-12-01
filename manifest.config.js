@@ -29,13 +29,13 @@ export default defineManifest({
   content_scripts: [
     {
       matches: ['<all_urls>'],
-      js: ['src/contentScript/index.ts'],
+      js: ['src/contentScript/index.js'],
       run_at: 'document_idle'
     }
   ],
   web_accessible_resources: [
     {
-      resources: ['src/injected/index.ts'],
+      resources: ['src/injected/index.js'],
       matches: ['<all_urls>']
     }
   ]

@@ -8,7 +8,7 @@ function init() {
   script.onload = function () {
     console.log('注入脚本已成功加载')
   }
-    ; (document.head || document.documentElement).appendChild(script)
+  ;(document.head || document.documentElement).appendChild(script)
 }
 
 init()

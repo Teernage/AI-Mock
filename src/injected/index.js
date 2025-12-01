@@ -1,5 +1,4 @@
-; (function () {
-
+function init() {
   //  保存原始方法
   const originalFetch = window.fetch
   const originalXHROpen = XMLHttpRequest.prototype.open
@@ -36,7 +35,9 @@
       if (input && typeof input === 'object' && 'url' in input) {
         return input.url
       }
-    } catch (_) { }
+    } catch (_) {
+      console.error('normalizeUrl error:', _)
+    }
     return String(input)
   }
 
@@ -96,7 +97,7 @@
   // ========== Fetch 拦截 ==========
   window.fetch = async function (url, options = {}) {
     const method = getMethod(url, options)
-    const response: any = await sendMockRequest(url, method)
+    const response = await sendMockRequest(url, method)
 
     if (response.shouldMock) {
       return new Response(JSON.stringify(response.mockData), {
@@ -123,7 +124,7 @@
       return originalXHRSend.apply(this, arguments)
     }
 
-    const response: any = await sendMockRequest(url, method)
+    const response = await sendMockRequest(url, method)
 
     if (response.shouldMock) {
       Object.defineProperty(this, 'readyState', { writable: true, value: 4 })
@@ -159,4 +160,6 @@
 
     return originalXHRSend.apply(this, arguments)
   }
-})()
+}
+
+init()
