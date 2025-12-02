@@ -59,11 +59,24 @@ function matchUrl(url, pattern, mode) {
         return url === pattern
       case 'regex': {
         if (typeof pattern !== 'string') return false
-        const m = pattern.match(/^\/(.+)\/([a-z]*)$/)
+        let p = pattern
+        let flags = ''
+        const m = pattern.match(/^\/([^\n]+)\/([a-z]*)$/)
         if (m) {
-          return new RegExp(m[1], m[2]).test(url)
+          p = m[1]
+          flags = m[2]
         }
-        return new RegExp(pattern).test(url)
+        let target = url
+        const looksFullUrl = /(^https?:\/\/)|(:\/\/)/.test(pattern)
+        try {
+          const u = new URL(url)
+          if (!looksFullUrl) {
+            target = u.pathname + u.search
+            if (!p.startsWith('^/')) p = p.replace(/^\^/, '')
+            p = p.replace(/\$/, '')
+          }
+        } catch {}
+        return new RegExp(p, flags).test(target)
       }
       case 'contains':
       default:
